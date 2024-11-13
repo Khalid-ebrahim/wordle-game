@@ -1,17 +1,65 @@
 //variables
 // 1- I will create a function named "startGame" to start the game and restart the game.
+function startGame() {
+  console.log('the game has started')
+}
+// 2- I will create a function named "CheckWin" to check if the user win by checking if all the letter was correct and in the right position it will consider "playerWin" else "tryAgain"
+const boxes = document.querySelectorAll('.box')
+const keyboardButtons = document.querySelectorAll('#keyboard button')
+const targetWord = 'STYLE'
 
-// 2- I will create a function named "GiveUp" to end the game.
+function checkGuess() {
+  let enteredWord = ''
+  boxes.forEach((box) => {
+    enteredWord += box.textContent
+  })
 
-// 3- I will create a function named "CheckWin" to check if the user win by checking if all the letter was correct and in the right position it will consider "playerWin" else "tryAgain"
+  if (enteredWord === targetWord) {
+    alert 'Congratulations! You guessed the word!'
+  } else {
+    alert 'Oops! Try again.'
+  }
+}
+console.log(targetWord)
 
-// 4- I will create a function named "playerWin" if the user win the game by putting all the letter correct and in the right position.
+function resetBoxes() {
+  boxes.forEach((box) => {
+    box.textContent = ''
+  })
+  currentBoxIndex = 0
+}
 
-// 5- I will create a function named "tryAgain" if the user lose the game by putting the wrong letter.
+// Add click event listeners to all keyboard buttons
+keyboardButtons.forEach((button) => {
+  button.addEventListener('click', handleButtonClick)
+})
+// 3- I will create a function named "playerWin" if the user win the game by putting all the letter correct and in the right position.
+let currentBoxIndex = 0
+// 4- I will create a function named "tryAgain" if the user lose the game by putting the wrong letter.
+function handleButtonClick(event) {
+  const buttonValue = event.target.textContent.toUpperCase()
+  // I wil create function named "retry" is the user cannot guess the right letters.
+  if (buttonValue === 'DELETE') {
+    if (currentBoxIndex > 0) {
+      currentBoxIndex--
+      boxes[currentBoxIndex].textContent = ''
+    }
+  }
+  // If "enter" is clicked, you could add a "submit word" logic here (not implemented here)
+  else if (buttonValue === 'ENTER') {
+    checkGuess()
+  } else {
+    if (currentBoxIndex < boxes.length) {
+      boxes[currentBoxIndex].textContent = buttonValue
+      currentBoxIndex++
+    }
+  }
+}
 
-// I wil create function named "retry" is the user cannot guess the right letters.
-
-// 4- I will create a function named "checkPosition" to check if its in the right position, if the letter right it will be green, if not right position and its correct letter it will be yellow
+keyboardButtons.forEach((button) => {
+  button.addEventListener('click', handleButtonClick)
+})
+// 5- I will create a function named "checkPosition" to check if its in the right position, if the letter right it will be green, if not right position and its correct letter it will be yellow
 
 //I will create an if statement if the user press any letter it will go inside the box
 
