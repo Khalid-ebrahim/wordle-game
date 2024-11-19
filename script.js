@@ -1,68 +1,86 @@
-//variables
+// Constant //
+let word = 'apple'
+let currentRow = 0
+let currentCol = 0
+let guess = ''
+const maxRows = 6
 // 1- I will create a function named "startGame" to start the game and restart the game.
 function startGame() {
-  console.log('the game has started')
+  word = getRandomWord()
+  resetGame()
 }
-// 2- I will create a function named "CheckWin" to check if the user win by checking if all the letter was correct and in the right position it will consider "playerWin" else "tryAgain"
-const boxes = document.querySelectorAll('.box')
-const keyboardButtons = document.querySelectorAll('#keyboard button')
-const targetWord = 'STYLE'
-
-function checkGuess() {
-  let enteredWord = ''
-  boxes.forEach((box) => {
-    enteredWord += box.textContent
-  })
-
-  if (enteredWord === targetWord) {
-    alert 'Congratulations! You guessed the word!'
-  } else {
-    alert 'Oops! Try again.'
-  }
-}
-console.log(targetWord)
-
-function resetBoxes() {
+// I will create an if statement if the user press any letter it will go inside the box
+function resetGame() {
+  const boxes = document.querySelectorAll('.box')
   boxes.forEach((box) => {
     box.textContent = ''
+    box.style.backgroundColor = 'white'
   })
-  currentBoxIndex = 0
+  currentRow = 0
+  currentCol = 0
+  guess = ''
+  document.getElementById('win-message').style.display = 'none'
+  document.getElementById('lose-message').style.display = 'none'
 }
 
-// Add click event listeners to all keyboard buttons
-keyboardButtons.forEach((button) => {
-  button.addEventListener('click', handleButtonClick)
-})
-// 3- I will create a function named "playerWin" if the user win the game by putting all the letter correct and in the right position.
-let currentBoxIndex = 0
-// 4- I will create a function named "tryAgain" if the user lose the game by putting the wrong letter.
-function handleButtonClick(event) {
-  const buttonValue = event.target.textContent.toUpperCase()
-  // I wil create function named "retry" is the user cannot guess the right letters.
-  if (buttonValue === 'DELETE') {
-    if (currentBoxIndex > 0) {
-      currentBoxIndex--
-      boxes[currentBoxIndex].textContent = ''
-    }
+document.querySelector('.keyboard').addEventListener('click', (e) => {
+  const key = e.target.textContent
+  if (key === 'Enter') {
+    submitGuess()
+  } else if (key === 'Delete') {
+    deleteLetter()
+  } else if (key.length === 1 && /^[a-zA-Z]$/.test(key)) {
+    addLetter(key)
   }
-  // If "enter" is clicked, you could add a "submit word" logic here (not implemented here)
-  else if (buttonValue === 'ENTER') {
-    checkGuess()
-  } else {
-    if (currentBoxIndex < boxes.length) {
-      boxes[currentBoxIndex].textContent = buttonValue
-      currentBoxIndex++
-    }
+})
+
+function addLetter(letter) {
+  if (currentCol < 5 && currentRow < maxRows) {
+    const index = currentRow * 5 + currentCol
+    const boxes = document.querySelectorAll('.box')
+    boxes[index].textContent = letter
+    guess += letter.toLowerCase()
+    currentCol++
   }
 }
 
-keyboardButtons.forEach((button) => {
-  button.addEventListener('click', handleButtonClick)
-})
-// 5- I will create a function named "checkPosition" to check if its in the right position, if the letter right it will be green, if not right position and its correct letter it will be yellow
-
-//I will create an if statement if the user press any letter it will go inside the box
-
+function deleteLetter() {
+  if (currentCol > 0) {
+    currentCol--
+    const index = currentRow * 5 + currentCol
+    const boxes = document.querySelectorAll('.box')
+    boxes[index].textContent = ''
+    guess = guess.slice(0, -1)
+  }
+}
 // I will do an if statement to check if the letter was correct and in the right position it will flip the box and make it green background, and I will create another if condition if the letter correct but the position not correct it will flip the box and make it yellow background, also if the letter was wrong letter it will keep it grey background.
+function submitGuess() {
+  if (guess.length === 5) {
+    const boxes = document.querySelectorAll('.box')
+    for (let i = 0; i < 5; i++) {
+      const index = currentRow * 5 + i
+      const letterBox = boxes[index]
+      const letter = guess[i]
 
-// I will addEventListener to check guess feedback on key presses As each letter is typed, check if it’s correct (green), partially correct (yellow), or incorrect (grey).
+      if (letter === word[i]) {
+        letterBox.style.backgroundColor = 'green'
+      } else if (word.includes(letter)) {
+        letterBox.style.backgroundColor = 'yellow'
+      } else {
+        letterBox.style.backgroundColor = 'gray'
+      }
+    }
+    // 2- I will create a function named "CheckWin" to check if the user win by checking if all the letter was correct and in the right position it will consider "playerWin" else "tryAgain"
+    if (guess === word) {
+      document.getElementById('win-message').style.display = 'block'
+      return
+    }
+    currentRow++
+    currentCol = 0
+    guess = ''
+
+    if (currentRow === maxRows) {
+      document.getElementById('lose-message').style.display = 'block'
+    }
+  }
+}
