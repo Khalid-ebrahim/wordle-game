@@ -1,19 +1,38 @@
 // Constant //
-let word = 'cloud'
+const words = [
+  'cloud',
+  'apple',
+  'train',
+  'space',
+  'flame',
+  'chair',
+  'crown',
+  'robot',
+  'plant',
+  'mouse'
+]
+
+let word = getRandomWord()
 let currentRow = 0
 let currentCol = 0
 let guess = ''
 const maxRows = 6
+
+function getRandomWord() {
+  const randomIndex = Math.floor(Math.random() * words.length)
+  return words[randomIndex]
+}
 // 1- I will create a function named "startGame" to start the game and restart the game.
 function startGame() {
+  word = getRandomWord()
   resetGame()
 }
-// I will create an if statement if the user press any letter it will go inside the box
+
 function resetGame() {
   const boxes = document.querySelectorAll('.box')
   boxes.forEach((box) => {
     box.textContent = ''
-    box.style.backgroundColor = 'white'
+    box.style.backgroundColor = 'rgb(204, 221, 225)'
   })
   currentRow = 0
   currentCol = 0
@@ -21,12 +40,13 @@ function resetGame() {
   document.getElementById('win-message').style.display = 'none'
   document.getElementById('lose-message').style.display = 'none'
 }
+//  I will create an if statement if the user press any letter it will go inside the box
 
 document.querySelector('.keyboard').addEventListener('click', (e) => {
   const key = e.target.textContent
-  if (key === 'Enter') {
+  if (key === 'Ent') {
     submitGuess()
-  } else if (key === 'Delete') {
+  } else if (key === 'Del') {
     deleteLetter()
   } else if (key.length === 1 && /^[a-zA-Z]$/.test(key)) {
     addLetter(key)
@@ -69,11 +89,12 @@ function submitGuess() {
         letterBox.style.backgroundColor = 'gray'
       }
     }
-    // 2- I will create a function named "CheckWin" to check if the user win by checking if all the letter was correct and in the right position it will consider "playerWin" else "tryAgain"
+
     if (guess === word) {
       document.getElementById('win-message').style.display = 'block'
       return
     }
+
     currentRow++
     currentCol = 0
     guess = ''

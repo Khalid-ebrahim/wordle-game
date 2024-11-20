@@ -20,4 +20,4 @@
 
 - Maybe the game will be more specific if I let the player use his own keyboard.
 - I will create a dark and light modes to make the game more professional.
-- I will let the letters flipped after the player press "Enter"
+- I will let the letters flipped after the player press "Ent"
