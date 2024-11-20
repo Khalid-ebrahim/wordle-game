@@ -1,12 +1,11 @@
 // Constant //
-let word = 'apple'
+let word = 'cloud'
 let currentRow = 0
 let currentCol = 0
 let guess = ''
 const maxRows = 6
 // 1- I will create a function named "startGame" to start the game and restart the game.
 function startGame() {
-  word = getRandomWord()
   resetGame()
 }
 // I will create an if statement if the user press any letter it will go inside the box

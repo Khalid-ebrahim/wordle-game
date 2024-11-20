@@ -1,11 +1,12 @@
 h1 {
-  font-family: Arial, Helvetica, sans-serif;
   display: flex;
   justify-content: center;
   text-align: center;
+  font-style: italic;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 body {
-  background-color: brown;
+  background-color: lightsteelblue;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -26,7 +27,7 @@ body {
 .box {
   width: 44px;
   height: 44px;
-  background-color: lightgray;
+  background-color: rgb(204, 221, 225);
   text-align: center;
   color: black;
   display: flex;
@@ -52,11 +53,11 @@ body {
 .keyboard button {
   aspect-ratio: 1;
   gap: 10px;
-  max-width: 42px;
+  max-width: 47px;
 }
 
 #win-message {
-  color: greenyellow;
+  color: green;
 }
 
 #lose-message {
